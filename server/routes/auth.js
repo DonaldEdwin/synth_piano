@@ -1,9 +1,9 @@
-import { Router } from "express";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { db } from "../db/index.js";
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { db } = require("../db/index"); // note: .js removed for CommonJS
 
-const router = Router();
+const router = express.Router();
 
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
@@ -42,4 +42,4 @@ router.post("/login", async (req, res) => {
   res.json({ token });
 });
 
-export default router;
+module.exports = router;
