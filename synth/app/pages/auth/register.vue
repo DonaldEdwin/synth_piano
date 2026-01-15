@@ -9,13 +9,13 @@ const router = useRouter();
 const loading = ref(false);
 const error = ref("");
 
-async function handleRegister({ username, email, password }) {
+async function handleRegister({ fullname, email, password }) {
   loading.value = true;
   error.value = "";
 
   try {
     const res = await apiPost("/auth/register", {
-      username,
+      fullname,
       email,
       password,
     });
@@ -26,7 +26,7 @@ async function handleRegister({ username, email, password }) {
     }
 
     // After successful registration, send user to login
-    router.push("/login");
+    router.push("/auth/login");
   } catch (e) {
     error.value = "Registration failed";
   } finally {

@@ -40,7 +40,7 @@ const upload = multer({
 router.get("/", async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT audios.*, users.username
+      SELECT audios.*, users.fullname
       FROM audios
       JOIN users ON users.id = audios.user_id
       ORDER BY audios.created_at DESC

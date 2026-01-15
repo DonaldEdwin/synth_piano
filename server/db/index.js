@@ -6,5 +6,6 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
-
-module.export = {db}; 
+// Export the pool directly, and also as a named property for callers
+module.exports = db;
+module.exports.db = db;

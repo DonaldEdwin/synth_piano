@@ -38,8 +38,9 @@ services:
       PORT: 3001
     volumes:
       - ./server:/app
+      - /app/node_modules
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3001/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/api/audios || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 10
