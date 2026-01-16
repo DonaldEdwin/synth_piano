@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: "",
-    fullName: "",
+    user: null,
   }),
 
   getters: {
@@ -16,27 +16,42 @@ export const useAuthStore = defineStore("auth", {
         const token = localStorage.getItem("token");
         if (token) {
           this.token = token;
+          this.decodeUser(token);
         }
       }
     },
 
     setToken(token) {
       this.token = token;
+      this.decodeUser(token);
       if (typeof window !== "undefined") {
         localStorage.setItem("token", token);
       }
     },
 
-    clearAuth() {
-      this.token = "";
-      this.fullName = "";
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("token");
+    decodeUser(token) {
+      if (!token) {
+        this.user = null;
+        return;
+      }
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        this.user = {
+          id: payload.id,
+          fullname: payload.fullname,
+        };
+      } catch (err) {
+        console.error("Failed to decode token:", err);
+        this.user = null;
       }
     },
 
-    setFullName(name) {
-      this.fullName = name;
+    clearAuth() {
+      this.token = "";
+      this.user = null;
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
+      }
     },
   },
 });

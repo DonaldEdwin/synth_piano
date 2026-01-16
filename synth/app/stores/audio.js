@@ -9,16 +9,18 @@ export const useAudioStore = defineStore("audio", {
 
   actions: {
     async fetchAudios() {
+      this.loading = true;
       try {
         const token = localStorage.getItem("token");
         this.audios = await apiGet("/audios", token);
       } catch (err) {
         console.error("Failed to fetch audios:", err);
+      } finally {
+        this.loading = false;
       }
     },
 
     async uploadAudio(formData) {
-      this.loading = true;
       try {
         const token = localStorage.getItem("token");
         await apiPost("/audios", formData, token); // FormData supported in apiPost
@@ -26,8 +28,6 @@ export const useAudioStore = defineStore("audio", {
       } catch (err) {
         console.error("Upload failed:", err);
         alert("Audio upload failed");
-      } finally {
-        this.loading = false;
       }
     },
   },
