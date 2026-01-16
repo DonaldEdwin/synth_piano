@@ -97,7 +97,6 @@ router.post("/:audioId", requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/comments/:commentId (auth - user can only delete their own)
 router.delete("/:commentId", requireAuth, async (req, res) => {
   try {
     const { commentId } = req.params;

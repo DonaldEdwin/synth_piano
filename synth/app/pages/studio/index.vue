@@ -1,7 +1,7 @@
 <template>
   <div class="mt-3 border mx-auto w-[85rem] h-[85vh]">
-    <div class="m-3 grid grid-cols-7 gap-4">
-      <div class="border col-span-3">
+    <div class="m-3 grid grid-cols-7 gap-4 h-full">
+      <div class="border col-span-3 overflow-y-auto">
         <div class="m-4 space-y-2">
           <div class="p-4">
             <Oscillator v-model="oscType" />
@@ -39,6 +39,40 @@
               v-model.number="delayAmount"
             />
           </label>
+
+          <Separator class="my-4" />
+
+          <div class="mt-6">
+            <h3 class="font-semibold text-sm mb-3">Your Audios</h3>
+            <div class="space-y-2">
+              <div
+                v-for="audio in userAudios"
+                :key="audio.id"
+                class="p-2 border rounded hover:bg-secondary cursor-pointer text-sm flex justify-between items-center gap-2"
+              >
+                <div class="flex-1 truncate">
+                  <p class="font-medium truncate">{{ audio.title }}</p>
+                  <audio
+                    :key="`audio-${audio.id}`"
+                    :src="audio.file_path"
+                    controls
+                    class="w-full mt-1"
+                  />
+                </div>
+                <Button
+                  @click="deleteAudio(audio.id)"
+                  size="sm"
+                  variant="destructive"
+                  class="h-6 w-6 p-0"
+                >
+                  ×
+                </Button>
+              </div>
+              <p v-if="userAudios.length === 0" class="text-xs text-muted-foreground py-2">
+                No audios yet
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="border col-span-4">
@@ -110,6 +144,20 @@
                   </div>
                 </RadioGroup>
               </div>
+              <div class="mt-2 space-y-2">
+  <input
+    v-model="title"
+    placeholder="Audio title"
+    class="border px-2 py-1 w-full"
+  />
+  <button
+    @click="saveRecording"
+    :disabled="!recording"
+    class="px-4 py-2 bg-primary text-white rounded"
+  >
+    Save
+  </button>
+</div>
             </div>
           </div>
         </div>
@@ -120,10 +168,15 @@
 <script setup>
 import * as Tone from "tone";
 import AudioKeys from "audiokeys";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import Oscillator from "~/components/Oscillator.vue";
-
+import { useAudioStore } from "@/stores/audio";
+import { useAuthStore } from "@/stores/auth";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { apiDelete } from "@/utils/api";
 
 onMounted(() => {});
 let synth;
@@ -139,6 +192,44 @@ const oscType = ref("");
 const reverbAmount = ref(0.0);
 const delayAmount = ref(0.0);
 const chorusAmount = ref(0.0);
+
+const title = ref("");
+const audioStore = useAudioStore();
+const authStore = useAuthStore();
+
+const userAudios = computed(() => {
+  return audioStore.audios.filter(audio => audio.user_id === authStore.user?.id);
+});
+
+const saveRecording = async () => {
+  if (!recording.value) return;
+  if (!title.value.trim()) {
+    alert("Enter a title");
+    return;
+  }
+
+  const file = new File([recording.value], "recording.wav", {
+    type: "audio/wav",
+  });
+
+  const form = new FormData();
+  form.append("audio", file);
+  form.append("title", title.value);
+
+  await audioStore.uploadAudio(form);
+
+  title.value = "";
+  recording.value = null;
+};
+
+const deleteAudio = async (audioId) => {
+  if (!confirm("Delete this audio?")) return;
+  const token = localStorage.getItem("token");
+  const response = await apiDelete(`/audios/${audioId}`, token);
+  if (response.success) {
+    await audioStore.fetchAudios();
+  }
+};
 
 watch(reverbAmount, (v) => {
   if (reverb) reverb.wet.value = v;

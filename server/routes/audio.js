@@ -90,4 +90,45 @@ router.post("/", requireAuth, upload.single("audio"), async (req, res) => {
   }
 });
 
+// DELETE /api/audios/:audioId (auth)
+router.delete("/:audioId", requireAuth, async (req, res) => {
+  try {
+    const { audioId } = req.params;
+
+    // Validate audioId
+    if (!audioId || isNaN(audioId)) {
+      return res.status(400).json({ error: "Invalid audio ID" });
+    }
+
+    // Check if audio exists and belongs to user
+    const [audio] = await db.query(
+      "SELECT * FROM audios WHERE id = ? AND user_id = ?",
+      [parseInt(audioId), req.user.id]
+    );
+
+    if (audio.length === 0) {
+      return res.status(404).json({ 
+        error: "Audio not found or you don't have permission to delete it" 
+      });
+    }
+
+    // Delete the file from disk
+    const filePath = path.join(__dirname, "../../", audio[0].file_path);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    // Delete from database (comments will be deleted due to CASCADE)
+    await db.query("DELETE FROM audios WHERE id = ?", [parseInt(audioId)]);
+
+    res.json({ 
+      success: true, 
+      message: "Audio deleted successfully" 
+    });
+  } catch (error) {
+    console.error("Error deleting audio:", error);
+    res.status(500).json({ error: "Failed to delete audio" });
+  }
+});
+
 module.exports = router;

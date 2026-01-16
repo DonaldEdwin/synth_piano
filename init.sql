@@ -24,3 +24,4 @@ CREATE TABLE comments (
   FOREIGN KEY (audio_id) REFERENCES audios(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+

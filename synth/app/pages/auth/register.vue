@@ -25,7 +25,7 @@ async function handleRegister({ fullname, email, password }) {
       return;
     }
 
-    // After successful registration, send user to login
+
     router.push("/auth/login");
   } catch (e) {
     error.value = "Registration failed";
