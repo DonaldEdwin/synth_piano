@@ -21,7 +21,7 @@
                     : 'text-gray-400 hover:text-white'
                 "
               >
-                <Icon :name="link.icon" class="!w-6 !h-6" />
+                <component :is="link.icon" class="w-6 h-6" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -41,11 +41,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Home, Music, User, Wand2 } from "lucide-vue-next";
+
 const route = useRoute();
 
 const navLinks = [
-  { name: "Home", path: "/", icon: "i-heroicons-home" },
-  { name: "Studio", path: "/studio", icon: "i-heroicons-home-modern" },
-  { name: "Profile", path: "/profile", icon: "i-heroicons-user" },
+  { name: "Home", path: "/", icon: Home },
+  { name: "Studio", path: "/studio", icon: Wand2 },
+  { name: "Library", path: "/library", icon: Music },
+  { name: "Profile", path: "/profile", icon: User },
 ];
 </script>

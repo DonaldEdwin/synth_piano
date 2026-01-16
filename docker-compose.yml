@@ -34,11 +34,12 @@ services:
       DB_USER: donald
       DB_PASSWORD: synth0577
       DB_NAME: synth_db
-      JWT_SECRET: ${JWT_SECRET}  # Move to .env file
+      JWT_SECRET: ${JWT_SECRET}
       PORT: 3001
     volumes:
       - ./server:/app
       - /app/node_modules
+    command: npm run dev
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3001/api/audios || exit 1"]
       interval: 10s

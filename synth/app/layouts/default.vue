@@ -7,4 +7,8 @@
 
 <script setup>
 import Navbar from "~/components/Navbar.vue";
+
+definePageMeta({
+  middleware: "auth",
+});
 </script>

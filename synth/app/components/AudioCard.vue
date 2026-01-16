@@ -25,7 +25,7 @@
       <audio :src="audio.file_path" controls class="w-full mb-4" />
     </CardContent>
 
-    <CardSeparator />
+    <Separator class="my-4" />
 
     <CardContent class="pt-4">
       <CommentsSection :audio="audio" />
@@ -37,8 +37,14 @@
 import { computed, ref } from "vue";
 import { useAudioStore } from "@/stores/audio";
 import { useAuthStore } from "@/stores/auth";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { CardSeparator } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import CommentsSection from "./CommentsSection.vue";
 import { apiDelete } from "@/utils/api";

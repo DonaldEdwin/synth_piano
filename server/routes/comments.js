@@ -15,7 +15,7 @@ router.get("/:audioId", async (req, res) => {
     }
 
     const [rows] = await db.query(`
-      SELECT comments.*, users.username
+      SELECT comments.*, users.fullname
       FROM comments
       JOIN users ON users.id = comments.user_id
       WHERE audio_id = ?
@@ -33,7 +33,7 @@ router.get("/:audioId", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const [rows] = await db.query(`
-      SELECT comments.*, users.username, audios.title as audio_title
+      SELECT comments.*, users.fullname, audios.title as audio_title
       FROM comments
       JOIN users ON users.id = comments.user_id
       JOIN audios ON audios.id = comments.audio_id
@@ -80,7 +80,7 @@ router.post("/:audioId", requireAuth, async (req, res) => {
 
     // Get the newly created comment with user info
     const [newComment] = await db.query(`
-      SELECT comments.*, users.username
+      SELECT comments.*, users.fullname
       FROM comments
       JOIN users ON users.id = comments.user_id
       WHERE comments.id = ?
