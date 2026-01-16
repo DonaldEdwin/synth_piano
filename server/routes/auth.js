@@ -7,13 +7,13 @@ const router = express.Router();
 
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fullname, email, password } = req.body;
 
   const hash = await bcrypt.hash(password, 10);
 
   await db.query(
-    "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
-    [username, email, hash]
+    "INSERT INTO users (fullname, email, password_hash) VALUES (?, ?, ?)",
+    [fullname, email, hash]
   );
 
   res.json({ ok: true });
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
   if (!ok) return res.status(401).json({ error: "Invalid credentials" });
 
   const token = jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.id, fullname: user.fullname },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
