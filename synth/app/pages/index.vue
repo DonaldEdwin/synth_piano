@@ -20,12 +20,7 @@
           </div>
 
           <h1 class="text-5xl md:text-6xl font-bold tracking-tight">
-            Create Music in Your
-            <span
-              class="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent"
-            >
-              Browser
-            </span>
+            Create Music in Your Browser
           </h1>
 
           <p
@@ -42,12 +37,12 @@
           >
             <NuxtLink to="/studio">
               <Button size="lg" class="bg-primary hover:bg-primary/90 px-8">
-                 Enter Studio
+                Enter Studio
               </Button>
             </NuxtLink>
             <NuxtLink to="/library">
               <Button size="lg" variant="outline" class="px-8">
-            Browse Library
+                Browse Library
               </Button>
             </NuxtLink>
           </div>
@@ -68,7 +63,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-            
               <h3 class="font-semibold mb-2">Interactive Piano</h3>
               <p class="text-sm text-muted-foreground">
                 Full 88-key weighted piano with white and black keys. Play with
@@ -82,7 +76,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-             
               <h3 class="font-semibold mb-2">Advanced Effects</h3>
               <p class="text-sm text-muted-foreground">
                 Reverb, chorus, and delay effects with real-time control. Choose
@@ -97,7 +90,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-          
               <h3 class="font-semibold mb-2">Record & Share</h3>
               <p class="text-sm text-muted-foreground">
                 Record your sessions directly in the browser and share with the
@@ -111,7 +103,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-              
               <h3 class="font-semibold mb-2">Community Feedback</h3>
               <p class="text-sm text-muted-foreground">
                 Engage with other musicians through comments and discussions.
@@ -125,7 +116,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-      
               <h3 class="font-semibold mb-2">Audio Library</h3>
               <p class="text-sm text-muted-foreground">
                 Explore a growing library of user-created audio. Browse by
@@ -139,7 +129,6 @@
             class="border-primary/20 bg-card/50 backdrop-blur hover:border-primary/50 transition-all"
           >
             <CardContent class="pt-6">
-             
               <h3 class="font-semibold mb-2">Real-Time Audio</h3>
               <p class="text-sm text-muted-foreground">
                 Powered by Tone.js, experience zero-latency audio synthesis.
@@ -159,7 +148,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-            Frontend
+              Frontend
             </h3>
             <ul class="space-y-2 text-muted-foreground">
               <li class="flex items-center gap-2">
@@ -179,7 +168,7 @@
 
           <div>
             <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-       Backend
+              Backend
             </h3>
             <ul class="space-y-2 text-muted-foreground">
               <li class="flex items-center gap-2">
@@ -201,7 +190,7 @@
         <!-- Docker -->
         <div class="mt-8 p-6 rounded-lg border border-primary/20 bg-primary/5">
           <h3 class="text-lg font-semibold mb-2 flex items-center gap-2">
-          Infrastructure
+            Infrastructure
           </h3>
           <p class="text-muted-foreground">
             Containerized with Docker and Docker Compose for seamless deployment
